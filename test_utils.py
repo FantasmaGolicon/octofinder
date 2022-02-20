@@ -50,7 +50,7 @@ class TestAutoOctoFinder(unittest.TestCase):
     def test_calculate_words(self):
         
         words = set() 
-        test_dir = '.\\test_data\\'
+        test_dir = './test_data/'
 
         with open("words.txt") as f:
             words = set(f.read().splitlines())
