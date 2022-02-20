@@ -127,7 +127,6 @@ if __name__ == '__main__':
     # Event handler whenever a message is received in the channel the bot is listening.
     @client.event
     async def on_message(msg):
-
         if msg.content.startswith('!find'):
             await client.runAutoOctoFinder(msg)
 
