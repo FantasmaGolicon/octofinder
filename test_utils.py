@@ -1,4 +1,3 @@
-from ctypes import util
 import utils
 import unittest
 import yaml
@@ -72,7 +71,6 @@ class TestAutoOctoFinder(unittest.TestCase):
             self.assertEqual(
                 actual_result,
                 expected_result)
-
 
 if __name__ == '__main__':
     unittest.main()

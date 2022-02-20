@@ -77,7 +77,7 @@ class DiscordClientBot(discord.Client):
         # limitation.
         header_embed = discord.Embed()
         header_embed.add_field(name=
-        "---Morph's Auto Octo Finder---\n\nWords within {0} turns:\n".format(maxTurns), value="---------",inline=True)
+        "---Morph's Auto Octo Finder---\n\nWords within {0} turns of {1}:\n".format(maxTurns, traits), value="---------",inline=True)
         await channel.send(embed=header_embed)
         
         embed_results_string = str()
@@ -104,7 +104,7 @@ class DiscordClientBot(discord.Client):
         results_file_name = "{0}_{1}_words.csv".format(traits, maxTurns)
         f = open(results_file_name,"w",encoding="utf-8")
 
-        csv_content = "WORDS,TURNS"
+        csv_content = "WORDS,TURNS\n"
         for item in sortedResults:
             csv_content += ("{0},{1}\n".format(item[0],item[1]))
         
