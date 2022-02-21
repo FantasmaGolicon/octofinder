@@ -141,4 +141,4 @@ if __name__ == '__main__':
     if(config_key == ''):
         config_key = os.environ.get('BOT_KEY')
 
-    client.run(
+    client.run(config_key)
