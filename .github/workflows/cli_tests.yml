@@ -35,5 +35,4 @@ jobs:
     - name: utils.py Unit Tests
       run: |
         pytest test_utils.py
-        pytest discord_bot_main.py
-
+        pytest test_bot.py

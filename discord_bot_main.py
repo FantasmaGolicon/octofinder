@@ -20,10 +20,32 @@ class DiscordClientBot(discord.Client):
         self.words_file_path = str()
         self.words = set()
 
+    def start_bot(self):
+        # Load config YAML for discord bot key and file with words list
+        stream = open('bot_config.yml','r')
+        config = yaml.safe_load(stream)
+        self.words_file_path = config['words_file_path']
+
+        config_key = config['bot_key'] 
+        if(config_key == ''):
+            config_key = os.environ.get('BOT_KEY')
+            
+        self.run('OTQ0MDgwNTA5OTAwODM2ODk1.Yg8ZfQ.aY-XBbuBND0mqKa9DEQZtIDlZRw')
+
     def loadWords(self):
         with open(self.words_file_path) as f:
             self.words = set(f.read().splitlines())
+    
+    # Implement event handlers
+    async def on_ready(self):
+        print('We have logged in as {0.user}'.format(client))
+        self.loadWords()
 
+    # Event handler whenever a message is received in the channel the bot is listening.
+    async def on_message(self, msg):
+        if msg.content.startswith('!find'):
+            await client.runAutoOctoFinder(msg)
+            
     async def runAutoOctoFinder(self, message):
         
         # We'll use the source channel as the destination of the messages.
@@ -115,30 +137,7 @@ class DiscordClientBot(discord.Client):
         await channel.send(file=discord.File(f.name))
 
 if __name__ == '__main__':
-
     # Create our Discord bot.
     client = DiscordClientBot()
+    client.start_bot()
     
-    # Implement event handlers
-    @client.event
-    async def on_ready():
-        print('We have logged in as {0.user}'.format(client))
-        client.loadWords()
-
-    # Event handler whenever a message is received in the channel the bot is listening.
-    @client.event
-    async def on_message(msg):
-        if msg.content.startswith('!find'):
-            await client.runAutoOctoFinder(msg)
-
-    # Load config YAML for discord bot key and file with words list
-    stream = open('bot_config.yml','r')
-    config = yaml.safe_load(stream)
-
-    client.words_file_path = config['words_file_path']
-
-    config_key = config['bot_key'] 
-    if(config_key == ''):
-        config_key = os.environ.get('BOT_KEY')
-
-    client.run(config_key)
