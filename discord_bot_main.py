@@ -1,4 +1,5 @@
 ## Discord API ##
+import os
 import discord
 from discord import channel
 from discord.ext import tasks
@@ -135,4 +136,9 @@ if __name__ == '__main__':
     config = yaml.safe_load(stream)
 
     client.words_file_path = config['words_file_path']
-    client.run(config['bot_key'])
+
+    config_key = config['bot_key'] 
+    if(config_key == ''):
+        config_key = os.environ.get('BOT_KEY')
+
+    client.run(
