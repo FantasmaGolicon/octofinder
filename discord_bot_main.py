@@ -30,7 +30,7 @@ class DiscordClientBot(discord.Client):
         if(config_key == ''):
             config_key = os.environ.get('BOT_KEY')
             
-        self.run('OTQ0MDgwNTA5OTAwODM2ODk1.Yg8ZfQ.aY-XBbuBND0mqKa9DEQZtIDlZRw')
+        self.run(config_key)
 
     def loadWords(self):
         with open(self.words_file_path) as f:
