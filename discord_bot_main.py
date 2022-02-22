@@ -19,6 +19,7 @@ class DiscordClientBot(discord.Client):
 
         self.words_file_path = str()
         self.words = set()
+        self.bot_token = str()
 
     def start_bot(self):
         # Load config YAML for discord bot key and file with words list
@@ -29,8 +30,9 @@ class DiscordClientBot(discord.Client):
         config_key = config['bot_key'] 
         if(config_key == ''):
             config_key = os.environ.get('BOT_KEY')
-            
-        self.run(config_key)
+
+        self.bot_token = config_key 
+        stream.close()
 
     def loadWords(self):
         with open(self.words_file_path) as f:
@@ -38,13 +40,13 @@ class DiscordClientBot(discord.Client):
     
     # Implement event handlers
     async def on_ready(self):
-        print('We have logged in as {0.user}'.format(client))
+        print('We have logged in as {0.user}'.format(self))
         self.loadWords()
 
     # Event handler whenever a message is received in the channel the bot is listening.
     async def on_message(self, msg):
         if msg.content.startswith('!find'):
-            await client.runAutoOctoFinder(msg)
+            await self.runAutoOctoFinder(msg)
             
     async def runAutoOctoFinder(self, message):
         
@@ -88,7 +90,7 @@ class DiscordClientBot(discord.Client):
                 "Beep Boop! Turns argument couldn't be read. Using default: " + str(maxTurns))
         
         # Run word calculation
-        results = utils.calculateWords(traits, client.words, maxTurns)
+        results = utils.calculateWords(traits, self.words, maxTurns)
 
         # Sort results by number turns. Lowest is shown first. 
         sortedResults = sorted(results.items(), key=lambda x: x[1], reverse=False)
@@ -136,8 +138,14 @@ class DiscordClientBot(discord.Client):
 
         await channel.send(file=discord.File(f.name))
 
+    #def test_run(self):
+
+
+
 if __name__ == '__main__':
     # Create our Discord bot.
     client = DiscordClientBot()
     client.start_bot()
+    client.run(client.bot_token)
+    
     

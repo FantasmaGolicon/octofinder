@@ -1,11 +1,13 @@
 import unittest
 from discord_bot_main import *
 
-class TestDiscordBot(unittest.TestCase):
+class TestDiscordBot(unittest.IsolatedAsyncioTestCase):
 
-    def init_bot(self):
+    async def test_init_bot(self):
         client = DiscordClientBot()
         client.start_bot()
+        result = await client.start(client.bot_token)
+        self.assertTrue(client.is_ready())
 
 if __name__ == '__main__':
     unittest.main()
