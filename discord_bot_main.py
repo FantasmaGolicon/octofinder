@@ -1,5 +1,4 @@
 ## Discord API ##
-import os
 import discord
 from discord import channel
 from discord.ext import tasks
@@ -10,6 +9,8 @@ import utils
 
 ## YAML used for configuring data fields ##
 import yaml
+
+import os
 
 ## Simple class that derives from discord.Client. Implement
 ## event handlers to customize behavior.
@@ -139,8 +140,6 @@ class DiscordClientBot(discord.Client):
         await channel.send(file=discord.File(f.name))
 
     #def test_run(self):
-
-
 
 if __name__ == '__main__':
     # Create our Discord bot.

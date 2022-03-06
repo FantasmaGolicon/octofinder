@@ -35,4 +35,3 @@ jobs:
     - name: utils.py Unit Tests
       run: |
         pytest test_utils.py
-        pytest test_bot.py
